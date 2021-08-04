@@ -11,11 +11,13 @@ import java.util.List;
 
 @Service
 public class DocumentService {
-    private final DocumentRepository documentRepository;
-    private final DocumentDtoMapper documentDtoMapper = new DocumentDtoMapper();
 
-    public DocumentService(DocumentRepository documentRepository) {
+    private final DocumentRepository documentRepository;
+    private final DocumentDtoMapper documentDtoMapper;
+
+    public DocumentService(DocumentRepository documentRepository, DocumentDtoMapper documentDtoMapper) {
         this.documentRepository = documentRepository;
+        this.documentDtoMapper = documentDtoMapper;
     }
 
     public List<DocumentDto> getAll() {

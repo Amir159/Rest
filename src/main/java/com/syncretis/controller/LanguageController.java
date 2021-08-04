@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/languages")
 public class LanguageController {
     private final LanguageService languageService;
 
@@ -14,27 +15,27 @@ public class LanguageController {
         this.languageService = languageService;
     }
 
-    @GetMapping("/languages")
+    @GetMapping
     List<LanguageDto> all() {
         return languageService.getAll();
     }
 
-    @GetMapping("/languages/{id}")
+    @GetMapping("{id}")
     LanguageDto one(@PathVariable Long id) {
         return languageService.getById(id);
     }
 
-    @PutMapping("/languages/{id}")
+    @PutMapping("{id}")
     LanguageDto updateLanguage(@PathVariable Long id, @RequestBody LanguageDto newLanguageDto) {
         return languageService.put(id, newLanguageDto);
     }
 
-    @PostMapping("/languages")
+    @PostMapping
     LanguageDto newLanguage(@RequestBody LanguageDto newLanguageDto) {
         return languageService.save(newLanguageDto);
     }
 
-    @DeleteMapping("/languages/{id}")
+    @DeleteMapping("{id}")
     void deleteLanguage(@PathVariable Long id) {
         languageService.deleteById(id);
     }

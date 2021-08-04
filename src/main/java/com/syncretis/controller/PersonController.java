@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/persons")
 public class PersonController {
     private final PersonService personService;
 
@@ -14,27 +15,27 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping("/persons")
+    @GetMapping
     List<PersonDto> all() {
         return personService.getAll();
     }
 
-    @GetMapping("/persons/{id}")
+    @GetMapping("{id}")
     PersonDto one(@PathVariable Long id) {
         return personService.getById(id);
     }
 
-    @PutMapping("/persons/{id}")
+    @PutMapping("{id}")
     PersonDto updatePerson(@PathVariable Long id, @RequestBody PersonDto newPersonDto) {
         return personService.put(id, newPersonDto);
     }
 
-    @PostMapping("/persons")
+    @PostMapping
     PersonDto newDepartment(@RequestBody PersonDto personDto) {
         return personService.save(personDto);
     }
 
-    @DeleteMapping("/persons/{id}")
+    @DeleteMapping("{id}")
     void deleteDepartment(@PathVariable Long id) {
         personService.deleteById(id);
     }

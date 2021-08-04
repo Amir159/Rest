@@ -1,6 +1,8 @@
 package com.syncretis.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -13,6 +15,7 @@ public class Department {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
     private String name;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE)

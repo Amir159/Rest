@@ -9,12 +9,15 @@ import com.syncretis.repository.DocumentRepository;
 import com.syncretis.repository.LanguageRepository;
 import com.syncretis.repository.PersonRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Validated
 public class PersonService {
+
     private final PersonRepository personRepository;
     private final DepartmentRepository departmentRepository;
     private final DocumentRepository documentRepository;

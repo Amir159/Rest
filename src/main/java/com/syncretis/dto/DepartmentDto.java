@@ -2,11 +2,17 @@ package com.syncretis.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import java.util.List;
 
 public class DepartmentDto {
+
+    @Null(message = "ID should be null during create and update")
     private Long id;
+    @NotBlank(message = "Name should be not null")
     private String name;
+    @Null(message = "personsId should be null")
     private List<Long> personsId;
 
     public DepartmentDto() {

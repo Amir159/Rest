@@ -5,12 +5,15 @@ import com.syncretis.entity.Department;
 import com.syncretis.mapper.DepartmentDtoMapper;
 import com.syncretis.repository.DepartmentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
 @Service
 public class DepartmentService {
+
     private final DepartmentRepository departmentRepository;
     private final DepartmentDtoMapper departmentDtoMapper;
 
@@ -30,7 +33,7 @@ public class DepartmentService {
     public DepartmentDto put(Long id, DepartmentDto departmentDto) {
         Department department = departmentDtoMapper.mapDepartmentDto(departmentDto);
         if (departmentRepository.existsById(id)) {
-            department.setId(departmentRepository.findById(id).orElse(null).getId());
+            department.setId(Objects.requireNonNull(departmentRepository.findById(id).orElse(null)).getId());
             department.setPersonList(Objects.requireNonNull(departmentRepository.findById(id).orElse(null)).getPersonList());
         }
         departmentRepository.save(department);
