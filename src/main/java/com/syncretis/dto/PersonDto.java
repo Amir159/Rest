@@ -2,10 +2,7 @@ package com.syncretis.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,7 +20,8 @@ public class PersonDto {
     private LocalDate birthday;
     @NotBlank(message = "should be not blank")
     private String departmentName;
-    @NotBlank(message = "should be not blank")
+    @NotNull(message = "should be not null")
+    @NotEmpty(message = "should be not empty")
     private List<String> languagesNames;
     @NotBlank(message = "should be not blank")
     private String documentId;
