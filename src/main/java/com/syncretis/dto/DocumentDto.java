@@ -2,11 +2,19 @@ package com.syncretis.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.time.LocalDate;
 
 public class DocumentDto {
+
+    @Null(message = "ID should be null during create and update")
     private String id;
+    @NotNull(message = "Expiry date should be not null")
+    @Future(message = "date should not be in the past")
     private LocalDate expiryDate;
+    @Null(message = "personId should be null")
     private Long personId;
 
     public DocumentDto() {
@@ -23,12 +31,12 @@ public class DocumentDto {
         return id;
     }
 
-    @JsonProperty("Expiry date")
+    @JsonProperty("ExpiryDate")
     public LocalDate getExpiryDate() {
         return expiryDate;
     }
 
-    @JsonProperty("Person id")
+    @JsonProperty("PersonId")
     public Long getPersonId() {
         return personId;
     }

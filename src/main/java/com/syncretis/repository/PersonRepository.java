@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
-//    Person findById(Long id);
 
     List<Person> findByIdBetween(Long firstId, Long lastId);
 

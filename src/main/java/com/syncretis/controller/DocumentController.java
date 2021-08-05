@@ -2,11 +2,15 @@ package com.syncretis.controller;
 
 import com.syncretis.dto.DocumentDto;
 import com.syncretis.service.DocumentService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
+@RequestMapping("/documents")
 public class DocumentController {
     private final DocumentService documentService;
 
@@ -14,28 +18,28 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @GetMapping("/documents")
+    @GetMapping
     List<DocumentDto> all() {
         return documentService.getAll();
     }
 
-    @GetMapping("/documents/{id}")
-    DocumentDto one(@PathVariable String id) {
+    @GetMapping("{id}")
+    DocumentDto one(@PathVariable("id") String id) {
         return documentService.getById(id);
     }
 
-    @PutMapping("/documents/{id}")
-    DocumentDto updateDocument(@PathVariable String id, @RequestBody DocumentDto newDocumentDto) {
+    @PutMapping("{id}")
+    DocumentDto updateDocument(@PathVariable("id") String id, @RequestBody @Valid DocumentDto newDocumentDto) {
         return documentService.put(id, newDocumentDto);
     }
 
-    @PostMapping("/documents")
-    DocumentDto newDocument(@RequestBody DocumentDto documentDto) {
+    @PostMapping
+    DocumentDto newDocument(@RequestBody @Valid DocumentDto documentDto) {
         return documentService.save(documentDto);
     }
 
-    @DeleteMapping("/documents/{id}")
-    void deleteDocument(@PathVariable String id) {
+    @DeleteMapping("{id}")
+    void deleteDocument(@PathVariable("id") String id) {
         documentService.deleteById(id);
     }
 }

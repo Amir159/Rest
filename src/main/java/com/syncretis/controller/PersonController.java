@@ -2,11 +2,16 @@ package com.syncretis.controller;
 
 import com.syncretis.dto.PersonDto;
 import com.syncretis.service.PersonService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
+@Validated
 @RestController
+@RequestMapping("/persons")
 public class PersonController {
     private final PersonService personService;
 
@@ -14,28 +19,28 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping("/persons")
+    @GetMapping
     List<PersonDto> all() {
         return personService.getAll();
     }
 
-    @GetMapping("/persons/{id}")
-    PersonDto one(@PathVariable Long id) {
+    @GetMapping("{id}")
+    PersonDto one(@PathVariable("id") @Min(1) Long id) {
         return personService.getById(id);
     }
 
-    @PutMapping("/persons/{id}")
-    PersonDto updatePerson(@PathVariable Long id, @RequestBody PersonDto newPersonDto) {
+    @PutMapping("{id}")
+    PersonDto updatePerson(@PathVariable("id") @Min(1) Long id, @RequestBody @Valid PersonDto newPersonDto) {
         return personService.put(id, newPersonDto);
     }
 
-    @PostMapping("/persons")
-    PersonDto newDepartment(@RequestBody PersonDto personDto) {
+    @PostMapping
+    PersonDto newDepartment(@RequestBody @Valid PersonDto personDto) {
         return personService.save(personDto);
     }
 
-    @DeleteMapping("/persons/{id}")
-    void deleteDepartment(@PathVariable Long id) {
+    @DeleteMapping("{id}")
+    void deleteDepartment(@PathVariable("id") @Min(1) Long id) {
         personService.deleteById(id);
     }
 }

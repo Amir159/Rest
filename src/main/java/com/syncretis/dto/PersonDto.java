@@ -2,16 +2,28 @@ package com.syncretis.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
 public class PersonDto {
+
+    @Null(message = "id should be null during create and update")
     private Long id;
+    @NotBlank(message = "should be not blank")
+    @Pattern(regexp = "[A-Za-z ]*", message = "should only contain letters")
     private String firstName;
+    @NotBlank(message = "should be not blank")
+    @Pattern(regexp = "[A-Za-z ]*", message = "should only contain letters")
     private String secondName;
+    @Past(message = "should not be in the future")
     private LocalDate birthday;
+    @NotBlank(message = "should be not blank")
     private String departmentName;
+    @NotNull(message = "should be not null")
+    @NotEmpty(message = "should be not empty")
     private List<String> languagesNames;
+    @NotBlank(message = "should be not blank")
     private String documentId;
 
     public PersonDto() {

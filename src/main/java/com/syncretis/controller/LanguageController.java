@@ -2,11 +2,16 @@ package com.syncretis.controller;
 
 import com.syncretis.dto.LanguageDto;
 import com.syncretis.service.LanguageService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
+@Validated
 @RestController
+@RequestMapping("/languages")
 public class LanguageController {
     private final LanguageService languageService;
 
@@ -14,28 +19,28 @@ public class LanguageController {
         this.languageService = languageService;
     }
 
-    @GetMapping("/languages")
+    @GetMapping
     List<LanguageDto> all() {
         return languageService.getAll();
     }
 
-    @GetMapping("/languages/{id}")
-    LanguageDto one(@PathVariable Long id) {
+    @GetMapping("{id}")
+    LanguageDto one(@PathVariable("id") Long id) {
         return languageService.getById(id);
     }
 
-    @PutMapping("/languages/{id}")
-    LanguageDto updateLanguage(@PathVariable Long id, @RequestBody LanguageDto newLanguageDto) {
+    @PutMapping("{id}")
+    LanguageDto updateLanguage(@PathVariable("id") @Min(1) Long id, @RequestBody @Valid LanguageDto newLanguageDto) {
         return languageService.put(id, newLanguageDto);
     }
 
-    @PostMapping("/languages")
-    LanguageDto newLanguage(@RequestBody LanguageDto newLanguageDto) {
+    @PostMapping
+    LanguageDto newLanguage(@RequestBody @Valid LanguageDto newLanguageDto) {
         return languageService.save(newLanguageDto);
     }
 
-    @DeleteMapping("/languages/{id}")
-    void deleteLanguage(@PathVariable Long id) {
+    @DeleteMapping("{id}")
+    void deleteLanguage(@PathVariable("id") @Min(1) Long id) {
         languageService.deleteById(id);
     }
 }
