@@ -2,12 +2,19 @@ package com.syncretis.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 public class LanguageDto {
-    private Long id;
 
+    @Null(message = "id should be null during create and update")
+    private Long id;
+    @NotBlank(message = "should not be empty")
+    @Pattern(regexp = "[A-Za-z ]*", message = "should contain only letters")
     private String name;
+    @Null(message = "id should be null")
     private List<Long> personsId;
 
     public LanguageDto() {

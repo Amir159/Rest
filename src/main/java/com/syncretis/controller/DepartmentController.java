@@ -31,17 +31,17 @@ public class DepartmentController {
     }
 
     @PutMapping("{id}")
-    DepartmentDto updateDepartment(@PathVariable @Min(0) Long id, @RequestBody @Valid DepartmentDto newDepartmentDto) {
+    DepartmentDto updateDepartment(@PathVariable("id") @Min(0) Long id, @RequestBody @Valid DepartmentDto newDepartmentDto) {
         return departmentService.put(id, newDepartmentDto);
     }
 
     @PostMapping
-    DepartmentDto newDepartment( @RequestBody @Valid DepartmentDto departmentDto) {
+    DepartmentDto newDepartment(@RequestBody /*@Valid*/ DepartmentDto departmentDto) {
         return departmentService.save(departmentDto);
     }
 
     @DeleteMapping("{id}")
-    void deleteDepartment(@PathVariable Long id) {
+    void deleteDepartment(@PathVariable("id") Long id) {
         departmentService.deleteById(id);
     }
 }

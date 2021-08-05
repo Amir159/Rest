@@ -24,12 +24,12 @@ public class DocumentController {
     }
 
     @GetMapping("{id}")
-    DocumentDto one(@PathVariable String id) {
+    DocumentDto one(@PathVariable("id") String id) {
         return documentService.getById(id);
     }
 
     @PutMapping("{id}")
-    DocumentDto updateDocument(@PathVariable String id, @RequestBody @Valid DocumentDto newDocumentDto) {
+    DocumentDto updateDocument(@PathVariable("id") String id, @RequestBody @Valid DocumentDto newDocumentDto) {
         return documentService.put(id, newDocumentDto);
     }
 
@@ -39,7 +39,7 @@ public class DocumentController {
     }
 
     @DeleteMapping("{id}")
-    void deleteDocument(@PathVariable String id) {
+    void deleteDocument(@PathVariable("id") String id) {
         documentService.deleteById(id);
     }
 }

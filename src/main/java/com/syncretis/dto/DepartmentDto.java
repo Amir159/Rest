@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 public class DepartmentDto {
@@ -11,6 +12,7 @@ public class DepartmentDto {
     @Null(message = "ID should be null during create and update")
     private Long id;
     @NotBlank(message = "Name should be not null")
+    @Pattern(regexp = "[A-Za-z ]*", message = "should only contain letters")
     private String name;
     @Null(message = "personsId should be null")
     private List<Long> personsId;
@@ -49,5 +51,14 @@ public class DepartmentDto {
 
     public void setPersonsId(List<Long> personsId) {
         this.personsId = personsId;
+    }
+
+    @Override
+    public String toString() {
+        return "DepartmentDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", personsId=" + personsId +
+                '}';
     }
 }
