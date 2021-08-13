@@ -2,6 +2,7 @@ package com.syncretis.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "department", schema = "publisher")
@@ -60,5 +61,18 @@ public class Department {
                 "id = " + id +
                 ", name = '" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(personList, that.personList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, personList);
     }
 }

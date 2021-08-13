@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 public class DocumentDtoMapper {
-    public List<DocumentDto> mapDocument(List<Document> documents) {
+    public List<DocumentDto> mapDocuments(List<Document> documents) {
         List<DocumentDto> documentsDto = new ArrayList<>();
         for (Document document : documents) {
             documentsDto.add(createDocumentDto(document));

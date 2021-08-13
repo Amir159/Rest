@@ -2,6 +2,7 @@ package com.syncretis.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "language", schema = "publisher")
@@ -63,5 +64,18 @@ public class Language {
                 "id = " + id +
                 ", name = '" + name + '\'' + personList +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Language language = (Language) o;
+        return Objects.equals(id, language.id) && Objects.equals(name, language.name) && Objects.equals(personList, language.personList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, personList);
     }
 }

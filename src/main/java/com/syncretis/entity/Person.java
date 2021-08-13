@@ -3,6 +3,7 @@ package com.syncretis.entity;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -45,20 +46,30 @@ public class Person {
     public Person() {
     }
 
-    public Person(String firstName, String secondName, LocalDate birthday, Department department, Document document) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.birthday = birthday;
-        this.department = department;
-        this.document = document;
-    }
-
-    public Person(Long id, String firstName, String secondName, LocalDate birthday, Department department, Document document) {
+    public Person(Long id, String firstName, String secondName, LocalDate birthday, Department department) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthday = birthday;
         this.department = department;
+    }
+
+    public Person(String firstName, String secondName, LocalDate birthday, Department department, List<Language> languageList, Document document) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthday = birthday;
+        this.department = department;
+        this.languageList = languageList;
+        this.document = document;
+    }
+
+    public Person(Long id, String firstName, String secondName, LocalDate birthday, Department department, List<Language> languageList, Document document) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthday = birthday;
+        this.department = department;
+        this.languageList = languageList;
         this.document = document;
     }
 
@@ -127,5 +138,24 @@ public class Person {
                 ", birthday = " + birthday +
                 ", " + department +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(id, person.id) && Objects.equals(firstName, person.firstName)
+                && Objects.equals(secondName, person.secondName)
+                && Objects.equals(birthday, person.birthday)
+//                && Objects.equals(department, person.department)
+//                && Objects.equals(languageList, person.languageList)
+//                && Objects.equals(document, person.document);
+                ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, secondName, birthday, department, languageList, document);
     }
 }

@@ -1,6 +1,6 @@
 package com.syncretis.valid;
 
-import com.syncretis.exception.DepartmentBadRequestException;
+import com.syncretis.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -8,30 +8,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ErrorHandlingControllerAdvice {
-
-    @ResponseBody
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ValidationErrorResponse onConstraintValidationException(
-            ConstraintViolationException e
-    ) {
-        final List<Violation> violations = e.getConstraintViolations().stream()
-                .map(
-                        violation -> new Violation(
-                                violation.getPropertyPath().toString(),
-                                violation.getMessage()
-                        )
-                )
-                .collect(Collectors.toList());
-        return new ValidationErrorResponse(violations);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -51,4 +32,31 @@ public class ErrorHandlingControllerAdvice {
         return e.getMessage();
     }
 
+    @ExceptionHandler(DepartmentNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public String onDepartmentException(DepartmentNotFoundException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(PersonNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public String onPersonException(PersonNotFoundException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(DocumentNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public String onDocumentException(DocumentNotFoundException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(LanguageNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public String onLanguageException(LanguageNotFoundException e) {
+        return e.getMessage();
+    }
 }

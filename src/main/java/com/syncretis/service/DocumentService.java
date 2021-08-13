@@ -2,8 +2,10 @@ package com.syncretis.service;
 
 import com.syncretis.dto.DocumentDto;
 import com.syncretis.entity.Document;
+import com.syncretis.exception.DocumentNotFoundException;
 import com.syncretis.mapper.DocumentDtoMapper;
 import com.syncretis.repository.DocumentRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,18 +23,20 @@ public class DocumentService {
     }
 
     public List<DocumentDto> getAll() {
-        return documentDtoMapper.mapDocument(documentRepository.findAll());
+        return documentDtoMapper.mapDocuments(documentRepository.findAll());
     }
 
     public DocumentDto getById(String id) {
-        return documentDtoMapper.mapDocument(documentRepository.findById(id).orElse(null));
+        return documentDtoMapper.mapDocument(documentRepository.findById(id).orElseThrow(() -> new DocumentNotFoundException(HttpStatus.NOT_FOUND)));
     }
 
     public DocumentDto put(String id, DocumentDto documentDto) {
         Document document = documentDtoMapper.mapDocumentDto(documentDto);
         if (documentRepository.existsById(id)) {
-            document.setId(documentRepository.findById(id).orElse(null).getId());
-            document.setPerson(documentRepository.findById(id).orElse(null).getPerson());
+            Document newDocument = documentRepository.findById(id).orElse(null);
+
+            document.setId(newDocument.getId());
+            document.setPerson(newDocument.getPerson());
         }
         documentRepository.save(document);
         return documentDtoMapper.mapDocument(document);
@@ -46,6 +50,7 @@ public class DocumentService {
 
     @Transactional
     public void deleteById(String id) {
+        documentRepository.findById(id).orElseThrow(() -> new DocumentNotFoundException(HttpStatus.NOT_FOUND));
         documentRepository.deleteById(id);
     }
 }

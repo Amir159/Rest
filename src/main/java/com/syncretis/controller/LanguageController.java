@@ -20,12 +20,12 @@ public class LanguageController {
     }
 
     @GetMapping
-    List<LanguageDto> all() {
+    List<LanguageDto> getAllLanguages() {
         return languageService.getAll();
     }
 
     @GetMapping("{id}")
-    LanguageDto one(@PathVariable("id") Long id) {
+    LanguageDto getLanguage(@PathVariable("id") Long id) {
         return languageService.getById(id);
     }
 
