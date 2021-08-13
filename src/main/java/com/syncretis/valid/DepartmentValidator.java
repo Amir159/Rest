@@ -18,10 +18,9 @@ public class DepartmentValidator implements Validator {
         if (departmentDto.getId() != null) {
             errors.rejectValue("name", "400", "id should be null");
         }
-        if (departmentDto.getName().isBlank() || departmentDto.getName() == null) {
+        if (departmentDto.getName() == null || departmentDto.getName().isBlank()) {
             errors.rejectValue("name", "400", "name should not be null");
-        }
-        if (!departmentDto.getName().matches("^[a-zA-Z ]+$")) {
+        } else if (!departmentDto.getName().matches("[a-zA-Z ]*")) {
             errors.rejectValue("name", "400", "name should contains only letters");
         }
         if (departmentDto.getPersonsId() != null) {

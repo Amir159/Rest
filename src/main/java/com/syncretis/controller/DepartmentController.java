@@ -21,12 +21,12 @@ public class DepartmentController {
     }
 
     @GetMapping
-    ResponseEntity<List<DepartmentDto>> all() {
+    ResponseEntity<List<DepartmentDto>> getAllDepartments() {
         return ResponseEntity.ok(departmentService.getAll());
     }
 
     @GetMapping("{id}")
-    DepartmentDto one(@PathVariable("id") @Min(0) Long id) {
+    DepartmentDto getDepartment(@PathVariable("id") @Min(0) Long id) {
         return departmentService.getById(id);
     }
 
@@ -36,7 +36,7 @@ public class DepartmentController {
     }
 
     @PostMapping
-    DepartmentDto newDepartment(@RequestBody /*@Valid*/ DepartmentDto departmentDto) {
+    DepartmentDto newDepartment(@RequestBody DepartmentDto departmentDto) {
         return departmentService.save(departmentDto);
     }
 

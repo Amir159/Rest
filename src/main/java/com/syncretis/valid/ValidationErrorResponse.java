@@ -3,7 +3,6 @@ package com.syncretis.valid;
 import java.util.List;
 
 public class ValidationErrorResponse {
-
     private final List<Violation> violations;
 
     public ValidationErrorResponse(List<Violation> violations) {

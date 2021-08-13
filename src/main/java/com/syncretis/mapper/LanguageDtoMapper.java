@@ -10,7 +10,7 @@ import java.util.List;
 
 @Component
 public class LanguageDtoMapper {
-    public List<LanguageDto> mapLanguage(List<Language> languages) {
+    public List<LanguageDto> mapLanguages(List<Language> languages) {
         List<LanguageDto> languagesDto = new ArrayList<>();
         for (Language language : languages) {
             languagesDto.add(createLanguageDto(language));
@@ -34,6 +34,8 @@ public class LanguageDtoMapper {
             for (Person person : personsList) {
                 personsId.add(person.getId());
             }
+        } else {
+            personsId = null;
         }
         return new LanguageDto(id, name, personsId);
     }
@@ -41,7 +43,6 @@ public class LanguageDtoMapper {
     public Language mapLanguageDto(LanguageDto languageDto) {
         Language language = new Language();
         language.setName(languageDto.getName());
-
         return language;
     }
 }

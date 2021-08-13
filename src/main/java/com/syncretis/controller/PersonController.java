@@ -20,12 +20,12 @@ public class PersonController {
     }
 
     @GetMapping
-    List<PersonDto> all() {
+    List<PersonDto> getAllPersons() {
         return personService.getAll();
     }
 
     @GetMapping("{id}")
-    PersonDto one(@PathVariable("id") @Min(1) Long id) {
+    PersonDto getPerson(@PathVariable("id") @Min(1) Long id) {
         return personService.getById(id);
     }
 

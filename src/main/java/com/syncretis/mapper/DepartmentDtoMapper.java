@@ -10,7 +10,7 @@ import java.util.List;
 
 @Component
 public class DepartmentDtoMapper {
-    public List<DepartmentDto> mapDepartment(List<Department> departments) {
+    public List<DepartmentDto> mapDepartments(List<Department> departments) {
         List<DepartmentDto> departmentsDto = new ArrayList<>();
         for (Department department : departments) {
             departmentsDto.add(createDepartmentDto(department));
@@ -34,6 +34,8 @@ public class DepartmentDtoMapper {
             for (Person person : personsList) {
                 personsId.add(person.getId());
             }
+        } else {
+            personsId = null;
         }
         return new DepartmentDto(id, name, personsId);
     }

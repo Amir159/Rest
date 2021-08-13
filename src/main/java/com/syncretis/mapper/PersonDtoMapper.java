@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 public class PersonDtoMapper {
-    public List<PersonDto> mapPerson(List<Person> persons) {
+    public List<PersonDto> mapPersons(List<Person> persons) {
         List<PersonDto> personsDto = new ArrayList<>();
         for (Person person : persons) {
             personsDto.add(createPersonDto(person));

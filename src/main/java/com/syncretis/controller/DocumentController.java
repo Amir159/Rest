@@ -19,12 +19,12 @@ public class DocumentController {
     }
 
     @GetMapping
-    List<DocumentDto> all() {
+    List<DocumentDto> getAllDocuments() {
         return documentService.getAll();
     }
 
     @GetMapping("{id}")
-    DocumentDto one(@PathVariable("id") String id) {
+    DocumentDto getDocument(@PathVariable("id") String id) {
         return documentService.getById(id);
     }
 
