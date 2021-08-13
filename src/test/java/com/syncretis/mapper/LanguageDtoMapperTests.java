@@ -5,54 +5,67 @@ import com.syncretis.entity.Language;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LanguageDtoMapperTests {
     private final LanguageDtoMapper languageDtoMapper = new LanguageDtoMapper();
-    private final LanguageDto languageDto1 = new LanguageDto("West chinese");
-    private final LanguageDto languageDto2 = new LanguageDto("North chinese");
-    private final LanguageDto languageDto3 = new LanguageDto("East chinese");
-    private final Language language1 = new Language("West chinese");
-    private final Language language2 = new Language("North chinese");
-    private final Language language3 = new Language("East chinese");
+
+    private static final String languageName1 = "West chinese";
+    private static final String languageName2 = "North chinese";
+    private static final String languageName3 = "East chinese";
 
     @Test
     public void shouldReturnLanguage() {
+        //GIVEN
+        LanguageDto languageDto = createLanguageDto(languageName1);
+        Language expectedLanguage = createLanguage(languageName1);
+
         //WHEN
-        Language actualLanguage = languageDtoMapper.mapLanguageDto(languageDto1);
+        Language actualLanguage = languageDtoMapper.mapLanguageDto(languageDto);
 
         //THEN
-        assertThat(actualLanguage).isEqualTo(language1);
+        assertThat(actualLanguage).isEqualTo(expectedLanguage);
     }
 
     @Test
     public void shouldReturnLanguageDto() {
+        //GIVEN
+        Language language = createLanguage(languageName1);
+        LanguageDto expectedLanguageDto = createLanguageDto(languageName1);
+
         //WHEN
-        LanguageDto actualLanguageDto = languageDtoMapper.mapLanguage(language1);
+        LanguageDto actualLanguageDto = languageDtoMapper.mapLanguage(language);
 
         //THEN
-        assertThat(actualLanguageDto).isEqualTo(languageDto1);
+        assertThat(actualLanguageDto).isEqualTo(expectedLanguageDto);
     }
 
     @Test
     public void shouldReturnListLanguageDto() {
         //GIVEN
-        List<LanguageDto> expectedLanguagesDto = new ArrayList<>();
-        expectedLanguagesDto.add(languageDto1);
-        expectedLanguagesDto.add(languageDto2);
-        expectedLanguagesDto.add(languageDto3);
+        List<LanguageDto> expectedLanguagesDto = Arrays.asList(createLanguageDto(languageName1),
+                createLanguageDto(languageName2),
+                createLanguageDto(languageName3));
 
-        List<Language> languages = new ArrayList<>();
-        languages.add(language1);
-        languages.add(language2);
-        languages.add(language3);
+        List<Language> languages = Arrays.asList(createLanguage(languageName1),
+                createLanguage(languageName2),
+                createLanguage(languageName3));
 
         //WHEN
         List<LanguageDto> actualLanguagesDto = languageDtoMapper.mapLanguages(languages);
 
         //THEN
         assertThat(actualLanguagesDto).isEqualTo(expectedLanguagesDto);
+    }
+
+    private LanguageDto createLanguageDto(String name) {
+        return new LanguageDto(name);
+    }
+
+    private Language createLanguage(String name) {
+        return new Language(name);
     }
 }

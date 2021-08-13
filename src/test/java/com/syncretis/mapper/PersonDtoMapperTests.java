@@ -16,6 +16,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PersonDtoMapperTests {
     private final PersonDtoMapper personDtoMapper = new PersonDtoMapper();
 
+    private static final LocalDate birthday1 = LocalDate.of(2000, 1, 1);
+    private static final LocalDate birthday2 = LocalDate.of(2000, 1, 2);
+
+    private static final LocalDate expiryDate1 = LocalDate.of(2000, 1, 1);
+    private static final LocalDate expiryDate2 = LocalDate.of(2000, 1, 2);
+
     private final Department department1 = new Department(999L, "Test department1");
     private final Department department2 = new Department(998L, "Test department2");
 
@@ -32,7 +38,7 @@ public class PersonDtoMapperTests {
         add(new Language(998L, "Test2 language"));
     }};
 
-    private final Person person1 = new Person(999L, "Test1", "Testing1", LocalDate.of(2000, 1, 1),
+    private final Person person1 = new Person(999L, "Test1", "Testing1", birthday1,
             department1, languagesList, document1);
     private final Person person2 = new Person(998L, "Test2", "Testing2", LocalDate.of(2000, 1, 2),
             department2, languagesList, document2);
@@ -76,5 +82,15 @@ public class PersonDtoMapperTests {
 
         //THEN
         assertThat(actualPersonsDto).isEqualTo(expectedPersonsDto);
+    }
+
+    private Person createPerson(Long id, String firstName, String secondName, LocalDate birthday, Department department,
+                                List<Language> languagesList, Document document) {
+        return new Person(id, firstName, secondName, birthday, department, languagesList, document);
+    }
+
+    private PersonDto createPersonDto(Long id, String firstName, String secondName, LocalDate birthday, String departmentName,
+                                List<String > languagesList, String documentId) {
+        return new PersonDto(id, firstName, secondName, birthday, departmentName, languagesList, documentId);
     }
 }
