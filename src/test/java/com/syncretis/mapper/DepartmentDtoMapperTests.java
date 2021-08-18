@@ -5,6 +5,7 @@ import com.syncretis.entity.Department;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,49 +13,59 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DepartmentDtoMapperTests {
     private final DepartmentDtoMapper departmentDtoMapper = new DepartmentDtoMapper();
 
-    private final DepartmentDto departmentDto1 = new DepartmentDto("Test1 department");
-    private final DepartmentDto departmentDto2 = new DepartmentDto("Test2 department");
-    private final DepartmentDto departmentDto3 = new DepartmentDto("Test3 department");
-
-    private final Department department1 = new Department("Test1 department");
-    private final Department department2 = new Department("Test2 department");
-    private final Department department3 = new Department("Test3 department");
+    private static final String departmentName1 = "Test1 department";
+    private static final String departmentName2 = "Test2 department";
+    private static final String departmentName3 = "Test3 department";
 
     @Test
     public void shouldReturnDepartment() {
+        //GIVEN
+        DepartmentDto departmentDto = createDepartmentDto(departmentName1);
+        Department expectedDepartment = createDepartment(departmentName1);
+
         //WHEN
-        Department actualDepartment = departmentDtoMapper.mapDepartmentDto(departmentDto1);
+        Department actualDepartment = departmentDtoMapper.mapDepartmentDto(departmentDto);
 
         //THEN
-        assertThat(actualDepartment).isEqualTo(department1);
+        assertThat(actualDepartment).isEqualTo(expectedDepartment);
     }
 
     @Test
     public void shouldReturnDepartmentDto() {
+        //GIVEN
+        Department department = createDepartment(departmentName1);
+        DepartmentDto expectedDepartment = createDepartmentDto(departmentName1);
+
         //WHEN
-        DepartmentDto actualDepartmentDto = departmentDtoMapper.mapDepartment(department1);
+        DepartmentDto actualDepartmentDto = departmentDtoMapper.mapDepartment(department);
 
         //THEN
-        assertThat(actualDepartmentDto).isEqualTo(departmentDto1);
+        assertThat(actualDepartmentDto).isEqualTo(expectedDepartment);
     }
 
     @Test
     public void shouldReturnListDepartmentDto() {
         //GIVEN
-        List<DepartmentDto> expectedDepartmentsDto = new ArrayList<>();
-        expectedDepartmentsDto.add(departmentDto1);
-        expectedDepartmentsDto.add(departmentDto2);
-        expectedDepartmentsDto.add(departmentDto3);
+        List<DepartmentDto> expectedDepartmentsDto = Arrays.asList(createDepartmentDto(departmentName1),
+                createDepartmentDto(departmentName2),
+                createDepartmentDto(departmentName3));
 
-        List<Department> departments = new ArrayList<>();
-        departments.add(department1);
-        departments.add(department2);
-        departments.add(department3);
+        List<Department> departments = Arrays.asList(createDepartment(departmentName1),
+                createDepartment(departmentName2),
+                createDepartment(departmentName3));
 
         //WHEN
         List<DepartmentDto> actualDepartmentsDto = departmentDtoMapper.mapDepartments(departments);
 
         //THEN
         assertThat(actualDepartmentsDto).isNotEmpty().hasSize(3).isEqualTo(expectedDepartmentsDto);
+    }
+
+    private Department createDepartment(String name) {
+        return new Department(name);
+    }
+
+    private DepartmentDto createDepartmentDto(String name) {
+        return new DepartmentDto(name);
     }
 }

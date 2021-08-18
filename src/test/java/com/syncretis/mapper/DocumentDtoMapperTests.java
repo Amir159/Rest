@@ -6,55 +6,67 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DocumentDtoMapperTests {
     private final DocumentDtoMapper documentDtoMapper = new DocumentDtoMapper();
-    private final DocumentDto documentDto1 = new DocumentDto(LocalDate.of(2025, 1, 1));
-    private final DocumentDto documentDto2 = new DocumentDto(LocalDate.of(2025, 1, 2));
-    private final DocumentDto documentDto3 = new DocumentDto(LocalDate.of(2025, 1, 3));
-    private final Document document1 = new Document(LocalDate.of(2025, 1, 1));
-    private final Document document2 = new Document(LocalDate.of(2025, 1, 2));
-    private final Document document3 = new Document(LocalDate.of(2025, 1, 3));
+
+    private static final LocalDate date1 = LocalDate.of(2025, 1, 1);
+    private static final LocalDate date2 = LocalDate.of(2025, 1, 2);
+    private static final LocalDate date3 = LocalDate.of(2025, 1, 3);
 
     @Test
     public void shouldReturnDocument() {
+        //GIVEN
+        DocumentDto documentDto = createDocumentDto(date1);
+        Document expectedDocument = createDocument(date1);
         //WHEN
-        Document actualDocument = documentDtoMapper.mapDocumentDto(documentDto1);
+        Document actualDocument = documentDtoMapper.mapDocumentDto(documentDto);
 
         //THEN
-        assertThat(actualDocument).isEqualTo(document1);
+        assertThat(actualDocument).isEqualTo(expectedDocument);
     }
 
     @Test
     public void shouldReturnDocumentDto() {
+        //GIVEN
+        Document document = createDocument(date1);
+        DocumentDto expectedDocumentDto = createDocumentDto(date1);
+
         //WHEN
-        DocumentDto actualDocumentDto = documentDtoMapper.mapDocument(document1);
+        DocumentDto actualDocumentDto = documentDtoMapper.mapDocument(document);
 
         //THEN
-        assertThat(actualDocumentDto).isEqualTo(documentDto1);
+        assertThat(actualDocumentDto).isEqualTo(expectedDocumentDto);
     }
 
     @Test
     public void shouldReturnListDocumentDto() {
         //GIVEN
-        List<DocumentDto> expectedDocumentsDto = new ArrayList<>();
-        expectedDocumentsDto.add(documentDto1);
-        expectedDocumentsDto.add(documentDto2);
-        expectedDocumentsDto.add(documentDto3);
+        List<DocumentDto> expectedDocumentsDto = Arrays.asList(createDocumentDto(date1),
+                createDocumentDto(date2),
+                createDocumentDto(date3));
 
-        List<Document> documents = new ArrayList<>();
-        documents.add(document1);
-        documents.add(document2);
-        documents.add(document3);
+        List<Document> documents = Arrays.asList(createDocument(date1),
+                createDocument(date2),
+                createDocument(date3));
 
         //WHEN
         List<DocumentDto> actualDocumentsDto = documentDtoMapper.mapDocuments(documents);
 
         //THEN
         assertThat(actualDocumentsDto).isEqualTo(expectedDocumentsDto);
+    }
+
+    private Document createDocument(LocalDate date) {
+        return new Document(date);
+    }
+
+    private DocumentDto createDocumentDto(LocalDate date) {
+        return new DocumentDto(date);
     }
 }
 
