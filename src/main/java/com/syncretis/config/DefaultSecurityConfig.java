@@ -1,40 +1,48 @@
 package com.syncretis.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
-public class DefaultSecurityConfig {
+//@EnableGlobalMethodSecurity(/*securedEnabled = true, */prePostEnabled = true)  -------for @PreAuthorize---------------
+public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    public void globalUserDetails(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("john").password(passwordEncoder.encode("123")).roles("USER").and()
+                .withUser("tom").password(passwordEncoder.encode("111")).roles("ADMIN").and()
+                .withUser("user1").password(passwordEncoder.encode("pass")).roles("USER").and()
+                .withUser("admin").password(passwordEncoder.encode("nimda")).roles("ADMIN");
+    }
+
+    @Override
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests(authorizeRequests ->
-                authorizeRequests.anyRequest().authenticated()
-        )
-                .formLogin(withDefaults());
-        return http.build();
+                        authorizeRequests
+                                .antMatchers("/oauth/**").permitAll()
+                                .anyRequest().authenticated()
+        );
     }
 
     @Bean
-    UserDetailsService users() {
-        UserDetails user1 = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("user")
-                .roles("USER")
-                .build();
-        UserDetails user2 = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin")
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user1, user2);
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
     }
-
 }
