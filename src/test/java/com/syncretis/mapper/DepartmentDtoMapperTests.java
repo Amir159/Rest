@@ -4,7 +4,6 @@ import com.syncretis.dto.DepartmentDto;
 import com.syncretis.entity.Department;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

@@ -2,15 +2,13 @@ package com.syncretis.validator;
 
 import com.syncretis.dto.DepartmentDto;
 import com.syncretis.valid.DepartmentValidator;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.ValidationUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
