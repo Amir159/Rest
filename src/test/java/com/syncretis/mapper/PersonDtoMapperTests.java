@@ -8,7 +8,6 @@ import com.syncretis.entity.Person;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -85,13 +84,13 @@ public class PersonDtoMapperTests {
 
         List<Person> persons = Arrays.asList(
                 createPerson(999L, firstName1, secondName1, birthday1, department1, languagesList, document1),
-                createPerson(998L, firstName2, secondName2, birthday2, department2, languagesList, document2) );
+                createPerson(998L, firstName2, secondName2, birthday2, department2, languagesList, document2));
 
         List<PersonDto> expectedPersonsDto = Arrays.asList(
                 createPersonDto(999L, firstName1, secondName1, birthday1, departmentName1,
                         Arrays.asList(languageName1, languageName2), documentId1),
                 createPersonDto(998L, firstName2, secondName2, birthday2, departmentName2,
-                        Arrays.asList(languageName1, languageName2), documentId2) );
+                        Arrays.asList(languageName1, languageName2), documentId2));
 
         //WHEN
         List<PersonDto> actualPersonsDto = personDtoMapper.mapPersons(persons);
@@ -106,7 +105,7 @@ public class PersonDtoMapperTests {
     }
 
     private PersonDto createPersonDto(Long id, String firstName, String secondName, LocalDate birthday, String departmentName,
-                                List<String > languagesList, String documentId) {
+                                      List<String> languagesList, String documentId) {
         return new PersonDto(id, firstName, secondName, birthday, departmentName, languagesList, documentId);
     }
 

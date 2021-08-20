@@ -1,15 +1,16 @@
 package com.syncretis.valid;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ValidationErrorResponse {
-    private final List<Violation> violations;
-
-    public ValidationErrorResponse(List<Violation> violations) {
-        this.violations = violations;
-    }
+    private List<Violation> violations = new ArrayList<>();
 
     public List<Violation> getViolations() {
         return violations;
+    }
+
+    public void setViolations(List<Violation> violations) {
+        this.violations = violations;
     }
 }
